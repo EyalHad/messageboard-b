@@ -1,6 +1,7 @@
 #include "Board.hpp"
 #include <iostream>
 #include "Direction.hpp"
+#include <stdlib.h>
 #include <string>
 using namespace ariel;
 using ariel::Direction;
@@ -13,6 +14,7 @@ int main()
     uint j;
 
     ariel::Board board;
+    srand(clock());
     for (unsigned int i = 15; i < n; i++)
     {   
         j = rand()%n;
