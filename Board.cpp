@@ -12,6 +12,7 @@ using ariel::Direction;
 
 
 namespace ariel {
+
     void Board::setMinR(unsigned int newR){ _MinR = newR;}
     void Board::setMinC(unsigned int newC){ _MinC = newC;}
     void Board::setMaxR(unsigned int newR){ _MaxR = newR;}
@@ -50,8 +51,6 @@ namespace ariel {
         if(vaild < 0) {return;}
 
         unsigned int len = input.length();
-        unsigned int hor = column; // in case we post Horizontal
-        unsigned int ver = row;    // in case we post Vertical
 
         if(way == ariel::Direction::Horizontal)
         {
@@ -60,15 +59,14 @@ namespace ariel {
             if(this->_MinC > column){ setMinC(column); }
                 //Maximums
             if(this->_MaxR < row+1){ setMaxR(row+1); }
-            if(this->_MaxC < column+len){ setMaxC(column+len); }
+            if(this->_MaxC < column+len+1){ setMaxC(column+len+1); }
 
             Board::reSize();
             
-
             for (unsigned int i = 0; i < len; i++)
             {
-                this->board.at(row).at(hor) = input[i];
-                hor++;     
+                this->board.at(row).at(column) = input[i];
+                column++;     
             }
             
         }else{
@@ -76,20 +74,17 @@ namespace ariel {
             if(this->_MinR > row){ setMinR(row); }
             if(this->_MinC > column){ setMinC(column); }
                 //Maximums
-            if(this->_MaxR < row+len){ setMaxR(row+len); }
+            if(this->_MaxR < row+len+1){ setMaxR(row+len+1); }
             if(this->_MaxC < column+1){ setMaxC(column+1); }
 
             Board::reSize();
 
-
             for (unsigned int i = 0; i < len; i++)
             {
-                this->board.at(ver).at(column) = input[i];
-                ver++;     
+                this->board.at(row).at(column) = input[i];
+                row++;     
             }
         }
-
-
     }
     std::string Board::read(unsigned  int row, unsigned int column, Direction way, unsigned int length){
 
@@ -112,8 +107,8 @@ namespace ariel {
                 length--;     
             }
         }
-
-        while (length > 0){ output += '_'; length--;}  // In case of reading more than there is -> will read Empty Posts
+        // In case of reading more than there is -> will read Empty Posts
+        while (length > 0){ output += '_'; length--;}  
         return output;
     }
 
