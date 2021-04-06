@@ -17,21 +17,54 @@ namespace ariel {
     void Board::setMaxR(unsigned int newR){ _MaxR = newR;}
     void Board::setMaxC(unsigned int newC){ _MaxC = newC;}
 
-    void Board::post(unsigned int row, unsigned int column, Direction way, const string &input)
+    int Board::checkValid(unsigned int row, unsigned int column, const string &input)
     {
-        if(input.length() == 0) {return;}
-        //Minimum 
-        if(this->_MinR > row){ setMinR(row); }
-        if(this->_MinC > column){ setMinC(column); }
-        //Maximums
-        if(this->_MaxR < row){ setMaxR(row); }
-        if(this->_MaxC < column){ setMaxC(column); }
+        unsigned int len = input.length();
+        if(len == 0) {return -1;}
+        int count = 0;
+        if (row > this->_MaxR || column > this->_MaxC)
+        {
+            for (ulong i = 0; i < len; i++)
+            {
+            if(input.at(i) != '_'){ break;}
+            count++;
+            }
+
+            if(count == len) {return -1;} // Avoid empty string under cover
+        }
+        return 0;
+    }
+
+    void Board::reSize()
+    {
+        this->board.resize(this->_MaxR);
+        for (unsigned int i = 0; i < this->_MaxR; i++)
+        {
+            this->board.at(i).resize(this->_MaxC,'_');
+        }  
+    }
+
+    void Board::post(unsigned int row, unsigned int column, Direction way, const string &input)
+    {   
+        int vaild = checkValid(row,column,input);
+        if(vaild < 0) {return;}
 
         unsigned int len = input.length();
         unsigned int hor = column; // in case we post Horizontal
         unsigned int ver = row;    // in case we post Vertical
+
         if(way == ariel::Direction::Horizontal)
         {
+                //Minimum 
+            if(this->_MinR > row){ setMinR(row); }
+            if(this->_MinC > column){ setMinC(column); }
+                //Maximums
+            if(this->_MaxR < row+1){ setMaxR(row+1); }
+            if(this->_MaxC < column+len){ setMaxC(column+len); }
+
+            Board::reSize();
+            
+
             for (unsigned int i = 0; i < len; i++)
             {
                 this->board.at(row).at(hor) = input[i];
@@ -39,6 +72,16 @@ namespace ariel {
             }
             
         }else{
+                //Minimum 
+            if(this->_MinR > row){ setMinR(row); }
+            if(this->_MinC > column){ setMinC(column); }
+                //Maximums
+            if(this->_MaxR < row+len){ setMaxR(row+len); }
+            if(this->_MaxC < column+1){ setMaxC(column+1); }
+
+            Board::reSize();
+
+
             for (unsigned int i = 0; i < len; i++)
             {
                 this->board.at(ver).at(column) = input[i];
@@ -51,40 +94,42 @@ namespace ariel {
     std::string Board::read(unsigned  int row, unsigned int column, Direction way, unsigned int length){
 
         string output;
-        unsigned len = length;
-        unsigned int hor = column; // in case we post Horizontal
-        unsigned int ver = row;    // in case we post Vertical
+
         if(way == ariel::Direction::Horizontal)
         {
-            for (unsigned int i = 0; i < len; i++)
-            {
-                output += this->board.at(row).at(hor);
-                hor++;     
+            while(column < this->_MaxC && length > 0)
+            {    
+                output += this->board.at(row).at(column);
+                column++;
+                length--;     
             }
-            
-        }else{
-            for (unsigned int i = 0; i < len; i++)
-            {
-                output += this->board.at(ver).at(column);
-                ver++;     
+
+        } else {
+            while(row < this->_MaxR && length > 0)
+            {    
+                output += this->board.at(row).at(column);
+                row++;
+                length--;     
             }
         }
+
+        while (length > 0){ output += '_'; length--;}  // In case of reading more than there is -> will read Empty Posts
         return output;
     }
 
 
-    void Board::show(){
-
+    void Board::show()
+    {
+        char p;
         for(unsigned int i = this->_MinR ; i < this->_MaxR; i++){
             cout << i << ":";
             for (unsigned int j = _MinC; j < _MaxC; j++)
             {
-                char p = board.at(i).at(j);
+                p = board.at(i).at(j);
                 cout << p ;
             }
             cout << endl;         
         }
-
     }
 
     

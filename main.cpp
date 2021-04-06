@@ -18,17 +18,20 @@ int main()
     for (unsigned int i = 15; i < n; i++)
     {   
         j = rand()%n;
-        board.post(i, j, Direction::Horizontal, input);
-        j+=2;
+        board.post(i, i, Direction::Horizontal, input);
+        srand(clock());
 
     }
         for (unsigned int i = 15; i < n; i++)
     {   
-        j = rand()%n;
-        board.post(i, j, Direction::Vertical, "PERROR");
-        j+=2;
+        j = rand()%10;
+        board.post(j, j, Direction::Vertical, "PERROR");
+        srand(clock());
 
     }
+
+    board.post(100,100,Direction::Horizontal, "_________");
+
 
     // for (unsigned int i = 15; i < 30; i++)
     // {
