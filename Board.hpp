@@ -34,16 +34,12 @@ namespace ariel {
         std::string read(unsigned  int row, unsigned int column, Direction, unsigned int length);
         void show();
         ~Board(){
-            cout << "Delete" << endl;
-            
+            cout << "Delete" << endl;     
         }
-        void setMinR(unsigned int);
-        void setMinC(unsigned int);
-        void setMaxR(unsigned int);
-        void setMaxC(unsigned int);
 
         void reSize();
         int checkValid(unsigned int row, unsigned int column, const string &input);
+        void setMinMax(unsigned int row,unsigned int column, unsigned int length, Direction way);
     };
 }
 #endif // ! _BOARD

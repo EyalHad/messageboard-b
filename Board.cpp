@@ -13,11 +13,27 @@ using ariel::Direction;
 
 namespace ariel {
 
-    void Board::setMinR(unsigned int newR){ _MinR = newR;}
-    void Board::setMinC(unsigned int newC){ _MinC = newC;}
-    void Board::setMaxR(unsigned int newR){ _MaxR = newR;}
-    void Board::setMaxC(unsigned int newC){ _MaxC = newC;}
 
+    void Board::setMinMax(unsigned int row,unsigned int column, unsigned int length, Direction way)
+    {
+            //Minimum 
+        if(this->_MinR > row){ this->_MinR = row; }
+        if(this->_MinC > column){ this->_MinC = column; } 
+
+        if(way == Direction::Horizontal)
+        {
+                //Maximums
+            if(this->_MaxR < row+1){ this->_MaxR = row+1; }
+            if(this->_MaxC < column+length+1){ this->_MaxC = column+length+1; }
+
+        } else {
+
+                //Maximums
+            if(this->_MaxR < row+length+1){ this->_MaxR = row+length+1; }
+            if(this->_MaxC < column+1){ this->_MaxC = column+1; }    
+        }
+
+    }
     int Board::checkValid(unsigned int row, unsigned int column, const string &input)
     {
         unsigned int len = input.length();
@@ -54,13 +70,8 @@ namespace ariel {
 
         if(way == ariel::Direction::Horizontal)
         {
-                //Minimum 
-            if(this->_MinR > row){ setMinR(row); }
-            if(this->_MinC > column){ setMinC(column); }
-                //Maximums
-            if(this->_MaxR < row+1){ setMaxR(row+1); }
-            if(this->_MaxC < column+len+1){ setMaxC(column+len+1); }
 
+            setMinMax(row,column,len,way);
             Board::reSize();
             
             for (unsigned int i = 0; i < len; i++)
@@ -70,13 +81,8 @@ namespace ariel {
             }
             
         }else{
-                //Minimum 
-            if(this->_MinR > row){ setMinR(row); }
-            if(this->_MinC > column){ setMinC(column); }
-                //Maximums
-            if(this->_MaxR < row+len+1){ setMaxR(row+len+1); }
-            if(this->_MaxC < column+1){ setMaxC(column+1); }
 
+            setMinMax(row,column,len,way);
             Board::reSize();
 
             for (unsigned int i = 0; i < len; i++)

@@ -30,7 +30,9 @@ int main()
 
     }
 
-    board.post(100,100,Direction::Horizontal, "_________");
+    board.post(100,100,Direction::Horizontal, "_________"); // Empty will not show.
+
+    
 
 
     // for (unsigned int i = 15; i < 30; i++)
