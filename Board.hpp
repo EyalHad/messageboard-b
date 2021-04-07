@@ -10,7 +10,7 @@ using namespace std;
 using ariel::Direction;
 
 
-const int DEFAULT_SIZE = 1;
+const int START_SIZE = 1;
 namespace ariel {
 
     class Board
@@ -24,19 +24,14 @@ namespace ariel {
         vector<vector<char>> board;
     public:    
         Board(){
-            _MinR = UINT32_MAX;
-            _MinC = UINT32_MAX;
-            _MaxR = 0;
-            _MaxC = 0;
-            board = vector<vector<char>>(DEFAULT_SIZE , vector<char> (DEFAULT_SIZE, '_'));
+            _MinR = _MinC = UINT32_MAX;
+            _MaxR = _MaxC = 0;
+            board = vector<vector<char>>(START_SIZE , vector<char> (START_SIZE, '_'));
         }
         void post(unsigned int row, unsigned int column, Direction,const string &input);
         std::string read(unsigned  int row, unsigned int column, Direction, unsigned int length);
         void show();
-        ~Board(){
-            cout << "Delete" << endl;     
-        }
-
+        ~Board(){ cout << "Delete" << endl;}
         void reSize();
         int checkValid(unsigned int row, unsigned int column, const string &input);
         void setMinMax(unsigned int row,unsigned int column, unsigned int length, Direction way);
