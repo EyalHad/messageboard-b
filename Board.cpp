@@ -8,9 +8,6 @@ using namespace std;
 using ariel::Direction;
 
 
-
-
-
 namespace ariel {
 
     /* 
