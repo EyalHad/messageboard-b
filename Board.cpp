@@ -56,7 +56,7 @@ namespace ariel {
     }
     /*
         reSize the board if the 4 parameters {_MinR, _MinC, _MaxR, _MaxC }
-
+        are bigger than the actual size of the board
     */
     void Board::reSize(){
         this->board.resize(this->_MaxR);
@@ -69,7 +69,7 @@ namespace ariel {
     void Board::post(unsigned int row, unsigned int column, Direction way, const string &input){   
         // In case that we trying to post unvalid post the function will do nothing    
         int vaild = checkValid(row,column,input);
-        if(vaild < 0) {cout << "UNVALID POST" << endl; return;} 
+        if(vaild < 0) {/*cout << "UNVALID POST" << endl;*/ return;} 
 
         unsigned int len = input.length();
 
