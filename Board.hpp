@@ -33,7 +33,7 @@ namespace ariel {
         void show();
         ~Board(){ cout << "Delete" << endl;}
         void reSize();
-        int checkValid(unsigned int row, unsigned int column, const string &input);
+        int checkValid(unsigned int row, unsigned int column, const string &input) const;
         void setMinMax(unsigned int row,unsigned int column, unsigned int length, Direction way);
     };
 }

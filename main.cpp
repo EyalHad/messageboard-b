@@ -3,6 +3,7 @@
 #include "Direction.hpp"
 #include <stdlib.h>
 #include <string>
+#include "snowman.hpp"
 using namespace ariel;
 using ariel::Direction;
 using ariel::Board;
@@ -16,78 +17,72 @@ int main()
 
 
     ariel::Board board;
-    board.post(0,49,Direction::Horizontal,"#");
-    board.post(10,49,Direction::Horizontal,"#");
-    board.post(0,49,Direction::Horizontal,"_");
-    board.post(10,49,Direction::Horizontal,"_");
-    for (int i = 0; i < 50; i++)
+    
+    for (size_t i = 0; i < 28; i++)
     {
-        board.post(0,i,Direction::Horizontal,"#");
-        usleep(25000);
+        board.post(0,i,Direction::Vertical,"########");
+        usleep(55000);
         board.show();
     }
-    for (int i = 0; i < 10; i++)
+    for (size_t i = 0; i < 10; i++)
     {
-        board.post(i,50,Direction::Vertical,"/");
-        usleep(25000);
+        board.post(i,0,Direction::Horizontal,"____________________________");
         board.show();
+        usleep(55000);
     }
-    for (int i = 49; i >=0 ; i--)
-    {
-        board.post(9,i,Direction::Horizontal,"#");
-        usleep(25000);
-        board.show();
+    string line6 = " Hello EveryOne   ";
+    string line7 = " This is My Board ";
+    while(1){
+        for(int k = 1; k < 22; k+=10){
+            usleep(10000);
+            srand(clock());
+            array<int,4> arr = {1,2,3,4};  
+            int value = 0;
+            
+            for (int i = 0; i < 8; i++)
+            {
+                int digit = rand()%4;
+                int n = arr[digit];
+
+                value += n;
+                if(i != 7)
+                value*=10;
+            }
+            string sm = ariel::snowman(value);
+            string app = "";
+            int line = 1;
+            for (size_t s = 0; s < sm.length(); s++)
+            {
+                char p = sm.at(s);
+                if(p == '\n'){
+                    board.post(line,k,Direction::Horizontal,app);
+                    line++;
+                    app = "";
+                    s++;
+                    p = sm.at(s);
+                }
+                app += p;
+                if(s == sm.length()-1){
+                    board.post(line,k,Direction::Horizontal,app);
+                }
+            }
+            
+            // cout << ariel::snowman(value) << endl;
+            // board.post(1,k,Direction::Horizontal,ariel::snowman(value));
+            usleep(750000);
+            board.show();
+        }
+        for (size_t i = 0; i < 10; i++)
+        {
+            board.post(i,0,Direction::Horizontal,"____________________________");
+            board.post(6,6,Direction::Horizontal,line6);
+            board.post(7,6,Direction::Horizontal,line7);
+            board.show();
+            usleep(75000);
+        }
+        
+
     }
-    for (int i = 9; i >= 0; i--)
-    {
-        board.post(i,0,Direction::Vertical,"/");
-        usleep(25000);
-        board.show();
-    }
-    string hello = "Welcome to my board Enjoy the show!                              ";
-    string p = "";
-    for (int i = 0; i <= 50; i++)
-    {
-        p = hello[i];
-        board.post(10,i,Direction::Vertical,p);
-        usleep(25000);
-        board.show();
-    }
-    string c17 =  "CCCCCCC";
-    string c26 = "CC      CC";
-    string c36 = "CC      CC";
-    string c46 = "CC        ";
-    string c56 = "CC      CC";
-    string c66 = "CC      CC";
-    string c77 =  "CCCCCCC";
-
-    string p120 = "PPPPPPPP";
-
-    vector<string> line1 = {c17,p120};
-
-    board.post(1,7,Direction::Horizontal,line1[0]);
-    board.post(1,20,Direction::Horizontal,line1[1]);
-
-    board.show();
-        usleep(75000);
-    board.post(2,6,Direction::Horizontal,c26);
-        board.show();
-        usleep(75000);
-    board.post(3,6,Direction::Horizontal,c36);
-        board.show();
-        usleep(75000);
-    board.post(4,6,Direction::Horizontal,c46);
-        board.show();
-        usleep(75000);
-    board.post(5,6,Direction::Horizontal,c56);
-        board.show();
-        usleep(75000);
-    board.post(6,6,Direction::Horizontal,c66);
-        board.show();
-        usleep(75000);
-    board.post(7,7,Direction::Horizontal,c77);
-        board.show();
-
     
 
 

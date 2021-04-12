@@ -33,7 +33,7 @@ namespace ariel {
             if(this->_MaxC < column+1){ this->_MaxC = column+1; }    
         }
     }
-    int Board::checkValid(unsigned int row, unsigned int column, const string &input){
+    int Board::checkValid(unsigned int row, unsigned int column, const string &input) const {
 
         unsigned int len = input.length();
         if(len == 0) {return -1;} // String length 0 will do nothing - for better preformance 
@@ -122,9 +122,9 @@ namespace ariel {
 
     void Board::show(){
         
-        char p;
+        char p = '_';
         for(unsigned int i = this->_MinR ; i < this->_MaxR-1; i++){
-            cout << i << ": ";
+            cout << i <<  ":-> ";
             for (unsigned int j = _MinC; j < _MaxC; j++)
             {
                 p = board.at(i).at(j);
